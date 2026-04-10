@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
@@ -5,17 +7,41 @@ var app = builder.Build();
 
 // app.Run();
 
-app.MapGet("/", () => "Добро пожаловать на сервер");
+// app.MapGet("/", () => "Добро пожаловать на сервер");
 
-app.MapGet("/about", () => "Это мой первый ASP.NET Core сервер");
+// app.MapGet("/about", () => "Это мой первый ASP.NET Core сервер");
 
-app.MapGet("/time", () => $"Время на сервер: {DateTime.Now}");
+// app.MapGet("/time", () => $"Время на сервер: {DateTime.Now}");
 
-app.MapGet("/hello/{name}", (string name) => $"Привет, {name}!");
+// app.MapGet("/hello/{name}", (string name) => $"Привет, {name}!");
 
-app.MapGet("/sum/{a}/{b}", (int a, int b) =>
-$"{10 + 25}");
+// app.MapGet("/sum/{a}/{b}", (int a, int b) =>
+// $"{10 + 25}");
+
+app.MapGet("/student", () => new {
+    Name = "Иван Иванов",
+    Group = "ИСП-234",
+    Year = 3,
+    IsActive = true
+});
+
+app.MapGet("/subject", () => new[] {
+    "РПМ",
+    "РМП",
+"ИСРПО",
+"СП",
+
+});
+
+app.MapGet("/product/{id}", (int id) => new Product(
+Id: id,
+Name: $"Товар #{id}",
+Price: id * 99.99m,
+InStock: id % 2 == 0
+));
 
 app.Run();
+
+record Product(int Id, string Name, decimal Price, bool InStock);
 
 
